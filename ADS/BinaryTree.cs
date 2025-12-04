@@ -65,7 +65,6 @@ public class BinarySearchTree<T> where T : IElementWithKey
         DisplayNode(b.Left, indent + (isLeft ? "    " : "│   "), true);
         DisplayNode(b.Right, indent + (isLeft ? "    " : "│   "), false);
     }
-
     public void InOrder(Action<T> f) => InOrderHelper(f, root);
     public void PreOrder(Action<T> f) => PreOrderHelper(f, root);
     public void PostOrder(Action<T> f) => PostOrderHelper(f, root);
@@ -236,31 +235,26 @@ public class BinaryNode<T> : IBinaryNode<T> where T : IElementWithKey
     private IBinaryNode<T> _left;
     private IBinaryNode<T> _right;
     private IBinaryNode<T> _parent;
-
     public T Element
     {
         get => _element;
         set => _element = value;
     }
-
     public IBinaryNode<T> Left
     {
         get => _left;
         set => _left = value;
     }
-
     public IBinaryNode<T> Right
     {
         get => _right;
         set => _right = value;
     }
-
     public IBinaryNode<T> Parent
     {
         get => _parent;
         set => _parent = value;
     }
-
     public bool IsEmptyNode() => false;
 
     public BinaryNode(T element, IBinaryNode<T> left, IBinaryNode<T> right, IBinaryNode<T> parent)

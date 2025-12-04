@@ -2,7 +2,6 @@ namespace ADS
 {
     public class ADS
     {
-
         static void Main()
         {
             /*
@@ -27,12 +26,6 @@ namespace ADS
             fraction.ShortenFraction();
             Console.WriteLine(fraction.ToString());
             */
-
-            /* 
-            Schreiben Sie eine Klasse Test, die das Interface IElementWithKey implementiert und erzeugen Sie 10 Objekte
-            mit ChangeableKey von 1 bis 10. Testen Sie damit die Methoden ExtractFirst, Insert und verändern Sie die
-            ChangeableKeys um IncreaseKey zu testen.
-            */
             var minpq = new MinPriorityQueue<Test>(20);
             Console.WriteLine(minpq.ToString());
             for (int i = 1; i <= 10; i++)
@@ -40,7 +33,6 @@ namespace ADS
                 minpq.Insert(new Test(i, i));
                 Console.WriteLine(minpq.ToString());
             }
-
             minpq.ExtractFirst();
             Console.WriteLine(minpq.ToString());
             Test tmin = new(11, 11);
@@ -56,7 +48,6 @@ namespace ADS
                 maxpq.Insert(new Test(i, i));
                 Console.WriteLine(maxpq.ToString());
             }
-
             maxpq.ExtractFirst();
             Console.WriteLine(maxpq.ToString());
             Test tmax = new(11, 11);
@@ -64,8 +55,6 @@ namespace ADS
             Console.WriteLine(maxpq.ToString());
             tmax.ChangeableKey = 12;
             Console.WriteLine(maxpq.ToString());
-
-
         }
     }
 }

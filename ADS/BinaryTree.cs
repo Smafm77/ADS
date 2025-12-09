@@ -193,7 +193,7 @@ public class BinarySearchTree<T> where T : IElementWithKey
         //Fall 2: genau ein Kind -> Kind hochschieben
         IBinaryNode<T> child = hasLeftChild ? left : right;
 
-        if (!(child is BinaryNode<T> realChild))
+        if (child is not BinaryNode<T> realChild)
         {
             throw new Exception("Das sollte nie passieren.");
         }
@@ -288,12 +288,12 @@ public class BinaryNode<T> : IBinaryNode<T> where T : IElementWithKey
 public class Node : IElementWithKey
 {
     private int _id;
-    private Node _parent;
+    private Node? _parent;
     private Color _color;
     private int _distance;
     private BinarySearchTree<Edge> _adjacent;
-
-    public Node Parent
+    private Action? _changingAction;
+    public Node? Parent
     {
         get => _parent;
         set => _parent = value;
@@ -313,16 +313,27 @@ public class Node : IElementWithKey
     public int ChangeableKey
     {
         get => _distance;
-        set => _distance = value;
+        set
+        {
+            _distance = value;
+            _changingAction?.Invoke();
+        }
     }
-    public Action ChangingAction { private get; set; }
+    public Node(int id)
+    {
+        _id = id;
+        _parent = null;
+        _adjacent = new BinarySearchTree<Edge>();
+    }
+    public Action ChangingAction { set => _changingAction = value; }
     public void AddEdge(Node neighbor, int weight)
     {
-
+        Edge newEdge = new(neighbor, weight);
+        Adjacent.Insert(newEdge);
     }
-    public void DeleteEdge()
+    public void DeleteEdge(Node neighbor)
     {
-
+        Adjacent.Delete(neighbor.Key);
     }
     public void IterateThroughNeighbors(Action<Node> action)
     {
@@ -337,6 +348,11 @@ public class Edge : IElementWithKey
 {
     private Node _node;
     private int _weight;
+    public Edge(Node neighbor, int weight)
+    {
+        _node = neighbor;
+        Weight = weight;
+    }
     public Node Neighbor => _node;
     public int Weight
     {

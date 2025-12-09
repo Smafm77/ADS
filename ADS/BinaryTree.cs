@@ -1,4 +1,10 @@
 using System.Text;
+public enum Color
+{
+    White,
+    Grey,
+    Black
+}
 public interface IBinaryNode<T> where T : IElementWithKey
 {
     public bool IsEmptyNode();
@@ -277,5 +283,74 @@ public class BinaryNode<T> : IBinaryNode<T> where T : IElementWithKey
         _left = new EmptyLeaf<T>(this);
         _right = new EmptyLeaf<T>(this);
         _parent = new EmptyNode<T>();
+    }
+}
+public class Node : IElementWithKey
+{
+    private int _id;
+    private Node _parent;
+    private Color _color;
+    private int _distance;
+    private BinarySearchTree<Edge> _adjacent;
+
+    public Node Parent
+    {
+        get => _parent;
+        set => _parent = value;
+    }
+    public Color Color
+    {
+        get => _color;
+        set => _color = value;
+    }
+    public BinarySearchTree<Edge> Adjacent
+    {
+        get => _adjacent;
+        set => _adjacent = value;
+    }
+
+    public int Key => _id;
+    public int ChangeableKey
+    {
+        get => _distance;
+        set => _distance = value;
+    }
+    public Action ChangingAction { private get; set; }
+    public void AddEdge(Node neighbor, int weight)
+    {
+
+    }
+    public void DeleteEdge()
+    {
+
+    }
+    public void IterateThroughNeighbors(Action<Node> action)
+    {
+        Adjacent.InOrder(edge =>
+    {
+        action(edge.Neighbor);
+    });
+    }
+    public int GetWeight(Node neighbor) => Adjacent.Find(neighbor.Key).Weight;
+}
+public class Edge : IElementWithKey
+{
+    private Node _node;
+    private int _weight;
+    public Node Neighbor => _node;
+    public int Weight
+    {
+        get => _weight;
+        set => _weight = value;
+    }
+    public int Key => _node.Key;
+    public int ChangeableKey
+    {
+        get => _node.ChangeableKey;
+        set => _node.ChangeableKey = value;
+    }
+    public Action ChangingAction
+    {
+        set => _node.ChangingAction = value;
     }
 }
